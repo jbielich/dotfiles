@@ -1,0 +1,4 @@
+"set guifont=Liberation\ Mono:h12
+set guifont=Droid\ Sans\ Mono:h10
+set background=dark
+colors Wombat256

@@ -1,0 +1,17 @@
+###################################################
+# .bash_profile is read by login terminals
+# .bash_rc is read by non-login terminals
+###################################################
+
+#------------------------------------------------------------------------------#
+# Env Vars
+#------------------------------------------------------------------------------#
+export PATH=/usr/local/bin:$PATH:$HOME/bin:$HOME/Dropbox/bin:$HOME/.dotfiles/bin
+export EDITOR=vim
+
+#------------------------------------------------------------------------------#
+# Load Bash Config Files
+#------------------------------------------------------------------------------#
+for filename in $HOME/.dotfiles/bashconf/*.sh; do
+    source "$filename"
+done

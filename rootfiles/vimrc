@@ -1,0 +1,159 @@
+" Thanks to the following for inspiration:
+"       Mislav Marohnić - mislav.uniqpath.com
+"       Tim Pope - tbaggery.com
+" 
+" 
+set nocompatible                " kill strict vi-compatibility. otherwise, why bother with vim ;)
+                                " This must be first, because it changes other options as side effect
+let mapleader = ";"             " make the leader something sane
+
+" General Stuff
+" ------------------------------------------------------------------------------
+syntax on                       " Syntax highlighting
+set encoding=utf-8              " Set files to UTF-8 format. Otherwise, you could run into issues when parsing in scripts, programs
+set showcmd                     " Display incomplete commands
+set hidden                      " It hides buffers instead of closing them. This means that you can have unwritten changes to a file and open a new file using :e, without being forced to write or undo your changes first. Also, undo buffers and marks are preserved while the buffer is open.
+set modelines=0                 " I don't use modelines, prevents some security exploits.
+                                " http://lists.alioth.debian.org/pipermail/pkg-vim-maintainers/2007-June/004020.html
+set backupdir=~/.tmp
+set undodir=~/.tmp
+set undofile
+set noswapfile                  " no swap files
+set history=1000                " remember more commands and search history
+set undolevels=1000             " use many muchos levels of undo
+set wildmenu
+set wildignore=*.swp,*.bak,*.pyc,*.class " files to ignore on file completion
+set wildmode=list:longest       " Completion mode that is used for the character specified with 'wildchar'.
+                                " list:longest"	When more than one match, list all matches and complete till longest common string.
+set scrolloff=3                 " Minimal number of screen lines to keep above and below the cursor. As you move around
+set ruler                       " Set ruler on bottom with col/row
+set autochdir                   " Automatically change to directory of file being edited
+set backspace=indent,eol,start  " backspace through everything in insert mode
+set ttyfast                     " Indicates a fast terminal connection. I'm local. duh.  
+set laststatus=2                " Always have status line
+set wrap                        " wrap line
+set textwidth=80
+set formatoptions=qrn1
+set colorcolumn=80
+
+" Le Tabs
+" ------------------------------------------------------------------------------
+set tabpagemax=50
+set tabstop=4                   " Real tabs are at 4 characters (lol, real tabs)
+set softtabstop=4               " when hitting tab or backspace, how many spaces 
+set shiftwidth=4                " auto-indent amount when using cindent, >>, <<, etc.
+set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
+set expandtab                   " Set tabs to spaces
+set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
+"set autoindent                  " always set autoindenting on
+
+" Le Searching and Moving
+" ------------------------------------------------------------------------------
+set hlsearch                    " highlight matches
+set incsearch                   " incremental searching
+set ignorecase                  " searches are case insensitive...
+set smartcase                   " ... unless they contain at least one capital letter
+set showmatch                   " set show matching parenthesis
+set gdefault                    " automatically apply global to search/replace; ie, /g is assumed
+
+" turn of search highlighting
+nnoremap <leader><space> :noh<cr>
+
+" Sane regexp searching (perl's. vim's sucks, and I am confused as it is with regexp
+nnoremap / /\v
+vnoremap / /\v
+
+" Remaps Tab to % for matching bracket of bracket your cursor is on
+nnoremap <tab> %
+vnoremap <tab> %
+
+
+
+" Vundle-ra-ma 
+" ------------------------------------------------------------------------------
+filetype off                    " turn off for Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#rc()
+
+ " let Vundle manage Vundle
+ " required! 
+Bundle 'gmarik/Vundle.vim'                        
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'hdima/python-syntax'
+Bundle 'scrooloose/syntastic'
+Bundle 'myusuf3/numbers.vim'
+Bundle 'bling/vim-airline'
+Bundle 'godlygeek/csapprox'
+Bundle 'godlygeek/tabular'
+Bundle 'kien/ctrlp.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'tpope/vim-markdown'
+Bundle 'vim-scripts/HTML-AutoCloseTag'
+Bundle 'itspriddle/vim-marked'
+Bundle 'sjbach/lusty'
+Bundle 'taglist.vim'
+Bundle 'vim-scripts/TaskList.vim'
+
+" Colors
+Bundle 'vim-scripts/Colour-Sampler-Pack'
+Bundle 'altercation/vim-colors-solarized'
+
+filetype plugin indent on       " filetype-specific indenting (python, c, etc)
+                                " turned back on after Vundle support is
+                                " managed
+
+" Syntastic variables
+" ------------------------------------------------------------------------------
+let g:syntastic_always_populate_loc_list=1 " make the loc list populate
+let g:syntastic_python_checkers=['pyflakes'] " force pyflakes in syntastic
+let g:syntastic_auto_loc_list=1 "make bottom location list always show on errors
+let g:syntastic_loc_list_height=5
+
+
+" Personal Remaps
+" ------------------------------------------------------------------------------
+
+" set up linebreak/wrap
+nnoremap <leader>w :set linebreak wrap<cr>
+
+" Makes j and k work movement by screen line instead of file line
+nnoremap j gj
+nnoremap k gk
+
+" Type jj to escape to normal mode.
+inoremap jj <ESC>
+
+" Move around split windows easier
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Edit .vimrc in vertical split
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>:noh<cr>
+
+nnoremap <D-]> :bn<cr>
+nnoremap <D-[> :bp<cr>
+
+" AutoCommands
+" ------------------------------------------------------------------------------
+
+augroup personalgroup
+    autocmd!
+    " Auto-saves when losing focus
+    "au FocusLost * :wa
+    autocmd FileType python set omnifunc=pythoncomplete#Complete
+augroup END
+
+" Status Line
+" ------------------------------------------------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" Colors
+" ------------------------------------------------------------------------------
+set background=dark
+colors Wombat256

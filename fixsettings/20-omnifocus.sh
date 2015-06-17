@@ -1,0 +1,5 @@
+# Show time in Due Date field
+defaults write com.omnigroup.OmniFocus RelativeDateFormatterShowTime YES
+defaults write com.omnigroup.OmniFocus RelativeDateFormatterDefaultWantsTruncatedTime YES
+defaults write com.omnigroup.OmniFocus RelativeDateFormatterUseRelativeDayNames YES
+defaults write com.omnigroup.OmniFocus RelativeDateFormatterDateFormatStyle medium
